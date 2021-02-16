@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Réservation
+{% endblock %}
+
+{% block body %}
+	<h3 class="mt-5">Liste des réservations :</h3>
+	<table class="table table-hover mt-3">
+		<thead>
+			<tr>
+				<th scope="col">Créé le</th>
+				<th scope="col">Date début</th>
+				<th scope="col">Date fin</th>
+				<th scope="col">Pseudo</th>
+				<th scope="col">Commentaire</th>
+				<th scope="col">Modifier</th>
+				<th scope="col">Supprimer</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for booking in bookings %}
+                <tr class="table-success">
+                    <td>{{booking.createdAt | date("d/m/Y")}}</td>
+                    <td>{{booking.startDate | date("d/m/Y")}}</td>
+                    <td>{{booking.endDate | date("d/m/Y")}}</td>
+                    <td>Pseudo</td>
+                    <td>{{booking.comment | raw}}</td>
+                    <td class="text-center">
+                        <a href="">
+                            <img src="img/edit_32.png" alt="Modifier">
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <a href="">
+                            <img src="img/delete_32.png" alt="Supprimer">
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+		</tbody>
+	</table>
+
+    <hr class="mt-5">
+
+	<div class="jumbotron mt-5">
+        <h3 class="mt-5">Formulaire de réservation :</h3>
+		{{form_start(formBooking)}}
+        {{form_row(formBooking.startDate, {
+            'label': "Date d'arrivée"
+        })}}
+        {{form_row(formBooking.endDate, {
+            'label': "Date de départ"
+        })}}
+        {{form_row(formBooking.comment, {
+            'label': ""
+        })}}
+        <button type="submit" class="btn btn-success disabled">Enregistrer le document</button>
+		{{form_end(formBooking)}}
+	</div>
+
+
+{% endblock %}

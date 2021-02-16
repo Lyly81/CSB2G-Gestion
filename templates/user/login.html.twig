@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    <div class="jumbotron">
+        {{form_start(formUser)}}
+        {{form_row(formUser)}}
+        {{form_end(formUser)}}
+    </div>
+{% endblock %}

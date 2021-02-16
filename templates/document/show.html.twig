@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Documents
+{% endblock %}
+
+{% block body %}
+	<h3 class="mt-5">Liste des documents :</h3>
+	<table class="table table-hover mt-3">
+		<thead>
+			<tr>
+				<th scope="col">Créé le</th>
+				<th scope="col">Date de la facture</th>
+				<th scope="col">Date de l'échéance</th>
+				<th scope="col">Désignation (libellé)</th>
+				<th scope="col">Montant</th>
+				<th scope="col">1 Part</th>
+				<th scope="col">1/3 de Part</th>
+				<th scope="col">Document</th>
+				<th scope="col">Modifier</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for document in documents %}
+				<tr class="table-secondary">
+					<th>{{document.createdAt | date('d/m/Y')}}</th>
+					<td>{{document.dateDocument | date('d/m/Y')}}</td>
+					<td>{{document.dateDeadline | date('d/m/Y')}}</td>
+					<td>{{document.designation}}</td>
+					<td>{{document.amount}}</td>
+					<td>{{document.onePart}}</td>
+					<td>{{document.thirdPart}}</td>
+					<td class="text-center">
+						<a href="#">
+							<img src="img/edit_32.png" alt="Modifier">
+						</a>
+					</td>
+					<td class="text-center">
+						<a href="#">
+							<img src="img/download_32.png" alt="Supprimer">
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+    <hr class="mt-5">
+
+	<div class="jumbotron mt-5">
+		<h3>Formulaire de dépôt d'un document :</h3>
+		{{form_start(formDocument)}}
+        {{form_row(formDocument.dateDocument, {
+            'label': "Date du document"
+        })}}
+        {{form_row(formDocument.designation, {
+            'label': "Désignation (libellé)",
+        })}}
+        {{form_row(formDocument.dateDeadline, {
+            'label': "Date de l'échéance, si c'est une facture"
+        })}}
+        {{form_row(formDocument.amount, {
+            'label': "Montant de la facture",
+            'attr': {
+                'placeholder': "0.00"
+            }
+        })}}
+        {{form_row(formDocument.url, {
+            'label': "Document ou facture a uploadé",
+            'attr': {
+                'placeholder': "Déposer le document au format .pdf"
+            }
+        })}}
+        <button type="submit" class="btn btn-success disabled">Enregistrer le document</button>
+		{{form_end(formDocument)}}
+	</div>
+
+{% endblock %}

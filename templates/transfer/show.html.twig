@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Etat de compte
+{% endblock %}
+
+{% block body %}
+	<h3 class="mt-5">Relevé de compte :</h3>
+	<table class="table table-hover mt-3">
+		<thead>
+			<tr>
+				<th scope="col">Créé le</th>
+				<th scope="col">Date virement</th>
+				<th scope="col">Désignation (libellé)</th>
+				<th scope="col">Solde avant</th>
+				<th scope="col">Débit</th>
+				<th scope="col">Crédit</th>
+				<th scope="col">Solde après</th>
+				<th scope="col">Modifier</th>
+				<th scope="col">Supprimer</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for transfer in transfers %}
+                <tr class="table-info">
+                    <th>{{transfer.createdAt | date('d/m/Y')}}</th>
+                    <td>{{transfer.dateTransfer | date('d/m/Y')}}</td>
+                    <td>{{transfer.designation}}</td>
+                    <td>{{transfer.balanceBefore}}</td>
+                    <td>{{transfer.debit}}</td>
+                    <td>{{transfer.credit}}</td>
+                    <td>{{transfer.balanceAfter}}</td>
+                    <td class="text-center">
+                        <a href="">
+                            <img src="img/edit_32.png" alt="Modifier">
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <a href="">
+                            <img src="img/delete_32.png" alt="Supprimer">
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+		</tbody>
+	</table>
+
+    
+    <hr class="mt-5">
+
+	<div class="jumbotron mt-5">
+		<h3>Formulaire de dépôt d'un virement :</h3>
+		{{form_start(formTransfer)}}
+        {{form_row(formTransfer.dateTransfer, {
+            'label': "Date du virement"
+        })}}
+        <p>Pseudo automatique avec l'enregistrement de la session.</p>
+        {{form_row(formTransfer.credit, {
+            'label': "Montant du virement",
+            'attr': {
+                'placeholder': "0.00"
+            }
+        })}}
+        <button type="submit" class="btn btn-success disabled">Enregistrer le virement</button>
+		{{form_end(formTransfer)}}
+	</div>
+
+{% endblock %}
